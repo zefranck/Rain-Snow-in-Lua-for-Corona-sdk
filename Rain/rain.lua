@@ -18,14 +18,17 @@ function rain.rainHandler( e )
 		if rain.group[i].name == "rainDrop" then
 			local drop = rain.group[i]
 			if drop.y < rain.rainFloor then
-				drop.x = drop.x + rain.rainRight * rain.dropLength*math.cos(rain.rainAngle) * drop.dropSpeed --rain.rainSpeed
+				drop.x = drop.x + rain.rainRight * rain.dropLength * math.cos(rain.rainAngle) * drop.dropSpeed   --rain.rainSpeed
 				drop.y = drop.y + rain.dropLength * drop.dropSpeed --rain.rainSpeed
+
 			else
 				drop.x = drop.x0
 				drop.y = drop.y0
 			end
+
 		end
 	end
+
 end
 
 -- Constructor
@@ -42,26 +45,26 @@ function rain.new(group, config)
 
 	-- Rain or snow
 	if (config.snow) then
-		rain.rainSpeed = config.speed or 0.6
+		rain.rainSpeed = config.speed or 0.3
 		rain.rainFloor = screenH - (config.floor or 0)
-		rain.dropRadius = config.radius or 6
+		rain.dropRadius = config.radius or 10
 		rain.dropLength = rain.dropRadius
 		rain.dropWidth = rain.dropRadius
 		rain.dropAlpha = config.alpha or 0.1
-		rain.dropColor = config.color or 255
+		rain.dropColor = config.color or 1
 	else
 		rain.rainSpeed = config.speed or 1.2
 		rain.rainFloor = screenH - (config.floor or 0)
 		rain.dropLength = config.length or 45
-		rain.dropWidth = config.width or 1
-		rain.dropAlpha = config.alpha or 0.08
-		rain.dropColor = config.color or 255
+		rain.dropWidth = config.width or 2
+		rain.dropAlpha = config.alpha or 0.3
+		rain.dropColor = config.color or 1
 	end
 
     -- Drops
 	for i = 1, dropsCount, 1 do
 		local dy = math.random(screenH+100)
-		local x, y = i*10 - rain.rainRight*(screenW*math.cos(rain.rainAngle)), -50-dy
+		local x, y = i*10 - rain.rainRight*(screenW*math.cos(rain.rainAngle)), -dy
 		local drop
 
 		-- Snow
@@ -84,8 +87,8 @@ function rain.new(group, config)
 		-- Rain
 		else
 			drop = display.newLine(x, y, x + rain.rainRight * rain.dropLength*math.cos(rain.rainAngle), y + rain.dropLength)
-			drop.width = rain.dropWidth
-			drop:setColor( rain.dropColor )
+			drop.strokeWidth = rain.dropWidth
+			drop:setStrokeColor( rain.dropColor )
 			drop.dropSpeed = rain.rainSpeed
 			drop.alpha = rain.dropAlpha
 		end

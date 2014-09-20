@@ -11,22 +11,37 @@ display.setStatusBar( display.HiddenStatusBar )
 
 group = display.newGroup()
 
-local g = graphics.newGradient(
-  { 100, 100, 100 },
-  { 100, 100, 100 },
-  "down" )
+local paint = {
+    type = "gradient",
+    color1 = { 0.5, 0.5, 0.5 },
+    color2 = { 1, 0, 0, 0 },
+    direction = "down"
+}
 
-local bg = display.newRect( 0, 0, screenW, screenH-50)
-bg:setFillColor( g )
-bg.alpha = 0.7
+
+local bg = display.newRect( screenW*0.5, screenH*0.5, screenW, screenH)
+bg:setFillColor( paint )
 group:insert(bg)
 
 local rain = require("rain")
 
-rain.new(group, {})
+local config = 	{	
+		snow = true,
+		speed = .5,
+		floor = 0,
+		length = 45,
+		width = 2,
+		radius = 4,
+		alpha = 0.15,
+		color = 1,
+		angle = 80,
+		count = 1000,
+		silent = true }
+
+rain.new(group, config)
 
 -- Pause rain:
-rain.pause()
+--rain.pause()
 
 -- Resume rain:
 rain.resume()
